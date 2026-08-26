@@ -1,0 +1,2 @@
+# Keep binary experiment data byte-for-byte identical on every platform.
+*.bin binary
