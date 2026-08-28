@@ -1,0 +1,6 @@
+﻿alert_time,target_id,alert_type,severity,field,description
+1710000120,780def,POSITION_MISSING,HIGH,lat,位置字段缺失: lat 为空
+1710000120,000001,DATA_DELAYED,MEDIUM,timestamp,数据延迟: batch_time(1710000120) - record_time(1710000000) = 120 > 60秒
+1710000120,780aaa,DUPLICATE_RECORD,MEDIUM,"target_id,timestamp","重复记录: target_id=780aaa, timestamp=1710000100 共出现 2 次"
+1710000120,780aaa,DUPLICATE_RECORD,MEDIUM,"target_id,timestamp","重复记录: target_id=780aaa, timestamp=1710000100 共出现 2 次"
+1710000120,780bbb,HEADING_OUT_OF_RANGE,MEDIUM,heading,"航向越界: heading=360.0, 要求 0 <= heading < 360"

@@ -1,0 +1,4 @@
+﻿target_id,timestamp,timestamp_source,on_ground,altitude_type,latitude,longitude,altitude,speed,heading,vertical_rate,callsign,lat_valid,lon_valid,altitude_valid,speed_valid,heading_valid,vertical_rate_valid,callsign_valid,message_seq,track_sequence_no,frame_index
+000001,1710000120,time_position,False,barometric,0.02002,0.020041,20.0,20.0,90.0,0.0,TEST0001,True,True,True,True,True,True,True,3,3,2
+780abc,1710000120,time_position,False,barometric,31.250382,121.493669,9900.0,231.5,88.0,1.5,CES1234,True,True,True,True,True,True,True,6,3,5
+780def,1710000120,time_position,False,geometric,,,7400.0,,268.0,-0.8,,False,False,True,False,True,True,False,9,3,8

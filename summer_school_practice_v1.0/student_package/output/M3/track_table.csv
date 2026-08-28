@@ -1,0 +1,10 @@
+target_id,track_sequence_no,timestamp,timestamp_source,on_ground,altitude_type,latitude,longitude,altitude,speed,heading,vertical_rate,callsign,lat_valid,lon_valid,altitude_valid,speed_valid,heading_valid,vertical_rate_valid,callsign_valid,message_seq,frame_index
+000001,1,1710000060,time_position,True,,,,0.0,0.0,0.0,0.0,TEST0001,True,True,True,True,True,True,True,1,0
+000001,2,1710000090,time_position,False,,,,10.0,10.0,45.0,0.0,TEST0001,True,True,True,True,True,True,True,2,1
+000001,3,1710000120,time_position,False,,,,20.0,20.0,90.0,0.0,TEST0001,True,True,True,True,True,True,True,3,2
+780abc,1,1710000060,time_position,False,,,,9800.0,230.5,86.0,0.0,CES1234,True,True,True,True,True,True,True,4,3
+780abc,2,1710000090,time_position,False,,,,9850.0,231.0,87.0,1.0,CES1234,True,True,True,True,True,True,True,5,4
+780abc,3,1710000120,time_position,False,,,,9900.0,231.5,88.0,1.5,CES1234,True,True,True,True,True,True,True,6,5
+780def,1,1710000060,last_contact,False,,,,7500.0,,270.0,-1.2,,True,True,True,False,True,True,False,7,6
+780def,2,1710000090,time_position,False,,,,7450.0,,269.0,-1.0,,True,True,True,False,True,True,False,8,7
+780def,3,1710000120,time_position,False,,,,7400.0,,268.0,-0.8,,False,False,True,False,True,True,False,9,8

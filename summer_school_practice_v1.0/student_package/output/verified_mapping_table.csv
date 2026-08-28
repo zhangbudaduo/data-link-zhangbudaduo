@@ -1,0 +1,30 @@
+﻿source_format,input_field,unified_field,rule,unit_conversion,null_strategy,evidence,verified,candidate_issue
+OpenSky,target_id,track_id,直接转为六位小写十六进制字符串，保留前导0,无（字符串）,必需字段，缺失则记录不可接受,source_field_definitions.md: track_id 行；opensky_field_dictionary.csv index0,True,候选正确，确认保留前导0
+OpenSky,latest_time,timestamp,直接映射 Unix 秒,无（整数秒）,必须为正整数；缺失或<=0则time_valid=false,source_field_definitions.md: timestamp 行；current_situation.csv latest_time=1710000120,True,候选正确，确认正整数检查
+TeachingLink,timestamp,timestamp,直接映射消息头 timestamp（uint32）,无（整数秒）,必需字段；缺失则记录不可接受,teaching_message_spec.md offset 8-11；partner_current_situation.csv timestamp=1710000120,True,候选未列出，补充
+OpenSky,timestamp_source,quality.time_source,直接映射字符串,无,默认 position_time,source_field_definitions.md: quality.time_source 行,True,候选未列出，补充
+TeachingLink,status_flags.bit2,quality.time_source,bit2=0 → position_time；bit2=1 → last_contact_fallback,无（布尔→枚举）,默认 position_time,teaching_message_spec.md: status_flags bit2=timestamp_fallback；source_field_definitions.md,True,候选错误：把 bit2 映射为 quality.time_valid，实际 bit2 是时间源回退标志，应映射到 quality.time_source
+OpenSky,callsign,identity.callsign,去除首尾空格后直接映射,无（字符串）,空或缺失时为 null,source_field_definitions.md: identity.callsign 行；opensky_field_dictionary.csv index1 需去除首尾空格,True,候选未列出 OpenSky callsign，补充
+TeachingLink,callsign+validity_flags.bit6,identity.callsign,bit6=1 时去除补0后映射；bit6=0 时为 null,无（ASCII 字符串）,有效位为0时 null,teaching_message_spec.md: validity_flags bit6=callsign；source_field_definitions.md,True,候选正确但需补充有效性位检查
+OpenSky,lat,position.lat,直接映射，单位度,无（度）,缺失或越界时 null,source_field_definitions.md: position.lat 行；opensky_field_dictionary.csv index5,True,候选未列出，补充
+TeachingLink,latitude_code+validity_flags.bit0,position.lat,bit0=1 时 code/(2^22-1)*180-90；bit0=0 时 null,code × (180/4194303) − 90，单位度,有效位为0时 null,teaching_message_spec.md: 纬度 Q((lat+90)/180*(2^22-1))；source_field_definitions.md,True,候选错误：把 latitude_code 映射为 position.lon（经纬度颠倒），修正为 position.lat
+OpenSky,lon,position.lon,直接映射，单位度,无（度）,缺失或越界时 null,source_field_definitions.md: position.lon 行；opensky_field_dictionary.csv index6,True,候选未列出，补充
+TeachingLink,longitude_code+validity_flags.bit1,position.lon,bit1=1 时 code/(2^22-1)*360-180；bit1=0 时 null,code × (360/4194303) − 180，单位度,有效位为0时 null,teaching_message_spec.md: 经度 Q((lon+180)/360*(2^22-1))；source_field_definitions.md,True,候选错误：把 longitude_code 映射为 position.lat（经纬度颠倒），修正为 position.lon
+OpenSky,altitude,position.alt,直接映射，单位米,无（米）,缺失时 null,source_field_definitions.md: position.alt 行；opensky_field_dictionary.csv index7,True,候选未列出，补充
+TeachingLink,altitude_code+validity_flags.bit2,position.alt,bit2=1 时 code-1000；bit2=0 时 null,code − 1000，单位米（物理偏置 1000m）,有效位为0时 null,teaching_message_spec.md: 高度 Q(altitude_m+1000)；source_field_definitions.md,True,候选错误：规则写'code乘1米'，遗漏物理偏置 -1000，修正为 code-1000
+OpenSky,altitude_type,position.alt_type,直接映射字符串 barometric/geometric,无,高度无效时 unknown,source_field_definitions.md: position.alt_type 行,True,候选未列出，补充
+TeachingLink,status_flags.bit1,position.alt_type,bit1=0 → barometric；bit1=1 → geometric；高度无效时 unknown,无（布尔→枚举）,altitude_valid=false 时 unknown,teaching_message_spec.md: status_flags bit1=altitude_is_geometric；source_field_definitions.md,True,候选未列出，补充
+OpenSky,speed,motion.speed,直接映射，单位 m/s,无（m/s）,缺失时 null,source_field_definitions.md: motion.speed 行；opensky_field_dictionary.csv index9,True,候选未列出，补充
+TeachingLink,speed_code+validity_flags.bit3,motion.speed,bit3=1 时 code*0.1；bit3=0 时 null,code × 0.1，单位 m/s,有效位为0时 null,teaching_message_spec.md: 地速 Q(speed_m_s/0.1)；source_field_definitions.md,True,候选未列出，补充
+OpenSky,heading,motion.heading,直接映射，单位度，0<=heading<360,无（度）,缺失或越界时 null,source_field_definitions.md: motion.heading 行；opensky_field_dictionary.csv index10,True,候选未列出，补充
+TeachingLink,heading_code+validity_flags.bit4,motion.heading,bit4=1 时 code*0.01 且 <360；bit4=0 时 null,code × 0.01，单位度,有效位为0时 null,teaching_message_spec.md: 航向 Q(heading_deg/0.01)；source_field_definitions.md,True,候选未列出，补充
+OpenSky,vertical_rate,motion.vertical_rate,直接映射，单位 m/s,无（m/s）,缺失时 null,source_field_definitions.md: motion.vertical_rate 行；opensky_field_dictionary.csv index11,True,候选未列出，补充
+TeachingLink,vertical_rate_code+validity_flags.bit5,motion.vertical_rate,bit5=1 时 code*0.01-327.68；bit5=0 时 null,code × 0.01 − 327.68，单位 m/s（物理偏置 327.68）,有效位为0时 null,teaching_message_spec.md: 垂直速度 Q((vr+327.68)/0.01)；source_field_definitions.md,True,候选未列出，补充
+OpenSky,on_ground,status.on_ground,直接映射为布尔值,无（布尔）,默认 false,source_field_definitions.md: status.on_ground 行；opensky_field_dictionary.csv index8,True,候选未列出，补充
+TeachingLink,status_flags.bit0,status.on_ground,bit0=1 → true；bit0=0 → false,无（布尔）,默认 false,teaching_message_spec.md: status_flags bit0=on_ground；source_field_definitions.md,True,候选未列出，补充
+OpenSky,lat_valid AND lon_valid,quality.position_valid,"经纬度均非空且在合法范围 [-90,90]/[-180,180] 时为 true",无,任一无效则 false,source_field_definitions.md: quality.position_valid 行,True,候选未列出，补充
+TeachingLink,validity_flags.bit0 AND validity_flags.bit1,quality.position_valid,经纬有效位均为1且解码值在合法范围时为 true,无,任一有效位为0则 false,source_field_definitions.md: quality.position_valid 行；teaching_message_spec.md,True,候选未列出，补充
+OpenSky,latest_time,quality.time_valid,latest_time 为正整数时 true,无,缺失或<=0则 false,source_field_definitions.md: quality.time_valid 行,True,候选未列出，补充
+TeachingLink,timestamp AND message_valid,quality.time_valid,timestamp 为正整数且帧通过接收判据时 true；时间回退不等于时间无效,无,timestamp 缺失或帧无效则 false,source_field_definitions.md: quality.time_valid 行,True,候选未列出，补充
+OpenSky,结构校验结果,quality.message_valid,源记录结构校验通过时 true,无,默认 true（OpenSky 当前态势已通过 M3）,source_field_definitions.md: quality.message_valid 行,True,候选未列出，补充
+TeachingLink,message_valid,quality.message_valid,完整帧接收判据（头字段、长度、校验和、保留位、标志一致性及必需字段）,无,帧无效则 false,source_field_definitions.md: quality.message_valid 行；teaching_message_spec.md 接收判据,True,候选正确，确认不得扩大为来源可信

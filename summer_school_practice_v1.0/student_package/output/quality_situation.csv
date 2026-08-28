@@ -1,0 +1,7 @@
+﻿target_id,timestamp,position_valid,delayed,duplicate_detected,heading_valid,message_valid,anomaly_level,display_status
+000001,1710000120,True,False,False,True,True,MEDIUM,WARNING
+780abc,1710000120,True,False,False,True,True,MEDIUM,WARNING
+780def,1710000120,False,False,False,True,True,HIGH,ERROR
+000001,1710000120,True,False,True,True,True,MEDIUM,WARNING
+780abc,1710000120,True,False,True,True,True,MEDIUM,WARNING
+780def,1710000120,False,False,True,True,True,HIGH,ERROR

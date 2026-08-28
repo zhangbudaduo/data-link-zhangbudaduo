@@ -1,0 +1,6 @@
+﻿alert_time,target_id,alert_type,severity,field,description
+1710000120,780def,POSITION_MISSING,HIGH,lat/lon,"位置字段缺失: lat,lon 为空 (source=OpenSky)"
+1710000120,000001,DUPLICATE_RECORD,MEDIUM,target_id+timestamp,"重复记录: target_id=000001, timestamp=1710000120 与第 1 条记录重复 (source=TeachingLink)"
+1710000120,780abc,DUPLICATE_RECORD,MEDIUM,target_id+timestamp,"重复记录: target_id=780abc, timestamp=1710000120 与第 2 条记录重复 (source=TeachingLink)"
+1710000120,780def,POSITION_MISSING,HIGH,lat/lon,"位置字段缺失: lat,lon 为空 (source=TeachingLink)"
+1710000120,780def,DUPLICATE_RECORD,MEDIUM,target_id+timestamp,"重复记录: target_id=780def, timestamp=1710000120 与第 3 条记录重复 (source=TeachingLink)"

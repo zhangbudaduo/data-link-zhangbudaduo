@@ -1,0 +1,14 @@
+record_no,stage,field,problem_type,value,description,message_valid,source
+3,parse,timestamp,REQUIRED_FIELD_MISSING,,time_position 与 last_contact 均为空，无法生成正常帧,,raw_states.json
+4,parse,heading,OUT_OF_RANGE,360.0,"航向 360.0 超出量程 [0, 360)",,raw_states.json
+,decode,frame,LENGTH_ERROR,40,帧长度 40 不等于 41,false,synthetic:short_40bytes
+,decode,frame,LENGTH_ERROR,43,帧长度 43 不等于 41,false,synthetic:long_42bytes
+,decode,magic,MAGIC_ERROR,0x0000,magic 应为 0x4453,false,synthetic:bad_magic
+,decode,version,VERSION_ERROR,2,version 应为 1,false,synthetic:bad_version
+,decode,message_type,MESSAGE_TYPE_ERROR,2,message_type 应为 1,false,synthetic:bad_message_type
+,decode,message_length,LENGTH_ERROR,40,message_length 应为 41,false,synthetic:bad_message_length
+,decode,checksum,CHECKSUM_ERROR,3009,校验和不一致：存储 3009，期望 2753,false,synthetic:bad_checksum
+,decode,latitude_code,RESERVED_BITS_ERROR,0xeb1aa8,纬度容器最高 2 位保留位非 0,false,synthetic:lat_reserved_bits
+,decode,status_flags,RESERVED_BITS_ERROR,0xf0,status_flags bit3-bit7 保留位非 0,false,synthetic:status_reserved_bits
+,decode,validity_flags,RESERVED_BITS_ERROR,0xff,validity_flags bit7 保留位非 0,false,synthetic:validity_reserved_bits
+,decode,heading_code,FLAG_VALUE_INCONSISTENCY,8600,heading 有效位为 0 但占位非 0,false,synthetic:flag_value_inconsistency
